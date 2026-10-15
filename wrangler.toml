@@ -8,9 +8,9 @@ workers_dev = false
 preview_urls = false
 
 # 本番ドメイン（デプロイ時にコメントを外す）
-# routes = [
-#   { pattern = "ap.rei78.cc", custom_domain = true }
-# ]
+routes = [
+  { pattern = "ap.rei78.cc", custom_domain = true }
+]
 
 # questions/*.json を src/generated/questions.ts に取り込む
 [build]
@@ -24,4 +24,4 @@ directory = "./public"
 binding = "DB"
 database_name = "ap-quiz"
 # `wrangler d1 create ap-quiz` の出力に置き換える（ローカル開発ではダミーのままで動く）
-database_id = "00000000-0000-0000-0000-000000000000"
+database_id = "fbcba59b-7e0d-451b-b187-739959703f18"
