@@ -370,6 +370,19 @@ function buildExportText(d) {
   for (const r of changed) {
     lines.push(`${r.question_id}: ${r.path.map((p) => `${p.answer}(${sec(p.at_ms)}s)`).join(' → ')}`);
   }
+
+  // 表の選択肢IDだけではAIが内容を判断できないため、問題文と選択肢も添える
+  const qmap = new Map(d.questions.map((q) => [q.id, q]));
+  lines.push('', '## 問題');
+  for (const r of d.results) {
+    const q = qmap.get(r.question_id);
+    if (!q) continue;
+    lines.push('', `### ${q.id}（${q.field}）${r.is_correct ? '○' : '×'}`, q.prompt);
+    for (const o of q.options) {
+      const marks = [o.id === q.answer && '正解', o.id === r.final_answer && '自分の回答'].filter(Boolean);
+      lines.push(`- ${o.id}: ${o.text}${marks.length ? ` ← ${marks.join('・')}` : ''}`);
+    }
+  }
   return lines.join('\n');
 }
 
