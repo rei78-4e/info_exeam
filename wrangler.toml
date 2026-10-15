@@ -1,0 +1,27 @@
+name = "ap-quiz"
+main = "src/index.ts"
+compatibility_date = "2026-10-01"
+
+# Cloudflare Access で保護する前提のため、*.workers.dev とプレビューURLは無効化する
+# （有効にすると Access を経由しない URL ができてしまう）
+workers_dev = false
+preview_urls = false
+
+# 本番ドメイン（デプロイ時にコメントを外す）
+# routes = [
+#   { pattern = "ap.rei78.cc", custom_domain = true }
+# ]
+
+# questions/*.json を src/generated/questions.ts に取り込む
+[build]
+command = "node scripts/build-questions.mjs"
+watch_dir = "questions"
+
+[assets]
+directory = "./public"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "ap-quiz"
+# `wrangler d1 create ap-quiz` の出力に置き換える（ローカル開発ではダミーのままで動く）
+database_id = "00000000-0000-0000-0000-000000000000"
